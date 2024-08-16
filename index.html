@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Caddie</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Virtual Caddie</h1>
+        <form id="recommendForm">
+            <label for="driver_distance">Driver Distance (yards):</label>
+            <input type="number" id="driver_distance" name="driver_distance" required>
+
+            <label for="distance">Distance to the hole (yards):</label>
+            <input type="number" id="distance" name="distance" required>
+
+            <label for="lie">Lie of the ball:</label>
+            <select id="lie" name="lie" required>
+                <option value="fairway">Fairway</option>
+                <option value="rough">Rough</option>
+                <option value="sand">Sand</option>
+                <option value="green">Green</option>
+            </select>
+
+            <input type="submit" value="Recommend Club">
+        </form>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function recommendClub(distance, lie, driverDistance) {
+            let percentage = (distance / driverDistance) * 100;
+            let club = "";
+
+            if (lie === "fairway") {
+                if (percentage > 100) club = "Driver";
+                else if (percentage >= 83) club = "3-Wood";
+                else if (percentage >= 75) club = "5-Hybrid";
+                else if (percentage >= 70) club = "5-Iron";
+                else if (percentage >= 66) club = "6-Iron";
+                else if (percentage >= 60) club = "7-Iron";
+                else if (percentage >= 57) club = "8-Iron";
+                else if (percentage >= 54) club = "9-Iron";
+                else if (percentage >= 42) club = "Pitching Wedge";
+                else if (percentage >= 38) club = "Approach Wedge - 52";
+                else if (percentage >= 32) club = "Sand Wedge - 56";
+                else club = "Lob Wedge - 60";
+            } else if (lie === "rough") {
+                if (percentage > 75) club = "3-Wood";
+                else if (percentage >= 57) club = "5-Iron";
+                else if (percentage >= 45) club = "7-Iron";
+                else if (percentage >= 38) club = "8-Iron";
+                else club = "Sand Wedge";
+            } else if (lie === "sand") {
+                if (percentage > 38) club = "7-Iron";
+                else club = "Sand Wedge";
+            } else {
+                club = "Putter";
+            }
+
+            return club;
+        }
+
+        document.getElementById("recommendForm").onsubmit = function(e) {
+            e.preventDefault();
+            let distance = parseInt(document.getElementById("distance").value);
+            let lie = document.getElementById("lie").value;
+            let driverDistance = parseInt(document.getElementById("driver_distance").value);
+            let club = recommendClub(distance, lie, driverDistance);
+            document.getElementById("result").textContent = "Your Recommended Club: " + club;
+        };
+    </script>
+</body>
+</html>

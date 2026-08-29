@@ -1,143 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Caddie</title>
-    <style>
-        /* Add your CSS styling here */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        form {
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        input[type="number"], select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-            .home-button {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: #28a745;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-    .home-button:hover {
-        background-color: #218838;
-    }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14261c">
+  <title>vCaddie | Pick your club</title>
+  <meta name="description" content="A quick golf club recommendation based on your distance, driver carry, and lie.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/style.css">
 </head>
 <body>
-    <div class="container">
-        <a href="https://www.keenroudy.com" class="home-button">Home</a>
-        <h1>Virtual Caddie</h1>
-        <form id="recommendForm">
-            <label for="driver_distance">Driver Distance (yards):</label>
-            <input type="number" id="driver_distance" name="driver_distance" required>
-
-            <label for="distance">Distance to the hole (yards):</label>
-            <input type="number" id="distance" name="distance" required>
-
-            <label for="lie">Lie of the ball:</label>
-            <select id="lie" name="lie" required>
-                <option value="fairway">Fairway</option>
-                <option value="rough">Rough</option>
-                <option value="sand">Sand</option>
-                <option value="green">Green</option>
-            </select>
-
-            <input type="submit" value="Recommend Club">
-        </form>
-        <p id="result"></p>
-    </div>
-
-    <script>
-        function recommendClub(distance, lie, driverDistance) {
-            let percentage = (distance / driverDistance) * 100;
-            let club = "";
-
-            if (lie === "fairway") {
-                if (percentage > 100) club = "Driver";
-                else if (percentage >= 83) club = "3-Wood";
-                else if (percentage >= 75) club = "5-Hybrid";
-                else if (percentage >= 70) club = "5-Iron";
-                else if (percentage >= 66) club = "6-Iron";
-                else if (percentage >= 60) club = "7-Iron";
-                else if (percentage >= 57) club = "8-Iron";
-                else if (percentage >= 54) club = "9-Iron";
-                else if (percentage >= 42) club = "Pitching Wedge";
-                else if (percentage >= 38) club = "Approach Wedge - 52";
-                else if (percentage >= 32) club = "Sand Wedge - 56";
-                else club = "Lob Wedge - 60";
-            } else if (lie === "rough") {
-                if (percentage > 75) club = "3-Wood";
-                else if (percentage >= 57) club = "5-Iron";
-                else if (percentage >= 45) club = "7-Iron";
-                else if (percentage >= 38) club = "8-Iron";
-                else club = "Sand Wedge";
-            } else if (lie === "sand") {
-                if (percentage > 38) club = "7-Iron";
-                else club = "Sand Wedge";
-            } else {
-                club = "Putter";
-            }
-
-            return club;
-        }
-
-        document.getElementById("recommendForm").onsubmit = function(e) {
-            e.preventDefault();
-            let distance = parseInt(document.getElementById("distance").value);
-            let lie = document.getElementById("lie").value;
-            let driverDistance = parseInt(document.getElementById("driver_distance").value);
-            let club = recommendClub(distance, lie, driverDistance);
-            document.getElementById("result").textContent = "Your Recommended Club: " + club;
-        };
-    </script>
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <a class="home-link" href="https://keenroudy.com/">KR <span>Home</span></a>
+      <p class="eyebrow">vCaddie</p>
+      <h1 id="page-title">A second opinion before you pull a club.</h1>
+      <p class="intro-copy">Give vCaddie your normal driver distance, the yardage in front of you, and your lie. It will give you a quick place to start.</p>
+      <div class="course-note"><span aria-hidden="true">●</span> Built for the in-between moments on the course</div>
+    </section>
+    <section class="caddie-card" aria-labelledby="form-title">
+      <div class="card-heading"><div><p class="eyebrow">Set up the shot</p><h2 id="form-title">What are you looking at?</h2></div><span class="step">01</span></div>
+      <form id="recommendForm" novalidate>
+        <label class="field"><span>Your normal driver distance</span><span class="unit-input"><input type="number" id="driver_distance" min="1" inputmode="numeric" placeholder="For example, 250" required><span>yards</span></span></label>
+        <label class="field"><span>Distance to the pin</span><span class="unit-input"><input type="number" id="distance" min="0" inputmode="numeric" placeholder="For example, 165" required><span>yards</span></span></label>
+        <fieldset class="fieldset"><legend>Lie</legend><div class="lie-options">
+          <label><input type="radio" name="lie" value="fairway" checked><span>Fairway</span></label>
+          <label><input type="radio" name="lie" value="rough"><span>Rough</span></label>
+          <label><input type="radio" name="lie" value="sand"><span>Sand</span></label>
+          <label><input type="radio" name="lie" value="green"><span>Green</span></label>
+        </div></fieldset>
+        <button class="recommend-button" type="submit">Recommend a club <span aria-hidden="true">→</span></button>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+      </form>
+      <section id="result" class="inline-result" aria-live="polite" hidden>
+        <p class="eyebrow">Your starting club</p><p id="shot-context" class="shot-context"></p><h2 id="club-result"></h2><p>Start there, take a look at the lie, and trust the swing you brought today.</p>
+      </section>
+      <p class="fine-print">This is a quick reference, not a replacement for the shot in front of you.</p>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#recommendForm');
+    const result = document.querySelector('#result');
+    const error = document.querySelector('#form-error');
+    function recommendClub(distance, lie, driverDistance) {
+      const percentage = (distance / driverDistance) * 100;
+      if (lie === 'fairway') {
+        if (percentage > 100) return 'Driver';
+        if (percentage >= 83) return '3-Wood';
+        if (percentage >= 75) return '5-Hybrid';
+        if (percentage >= 70) return '5-Iron';
+        if (percentage >= 66) return '6-Iron';
+        if (percentage >= 60) return '7-Iron';
+        if (percentage >= 57) return '8-Iron';
+        if (percentage >= 54) return '9-Iron';
+        if (percentage >= 42) return 'Pitching Wedge';
+        if (percentage >= 38) return 'Approach Wedge · 52°';
+        if (percentage >= 32) return 'Sand Wedge · 56°';
+        return 'Lob Wedge · 60°';
+      }
+      if (lie === 'rough') return percentage > 75 ? '3-Wood' : percentage >= 57 ? '5-Iron' : percentage >= 45 ? '7-Iron' : percentage >= 38 ? '8-Iron' : 'Sand Wedge';
+      if (lie === 'sand') return percentage > 38 ? '7-Iron' : 'Sand Wedge';
+      return 'Putter';
+    }
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      error.hidden = true;
+      if (!form.checkValidity()) {
+        error.textContent = 'Enter a positive driver distance and a valid distance to the pin.';
+        error.hidden = false;
+        form.reportValidity();
+        return;
+      }
+      const driver = Number(document.querySelector('#driver_distance').value);
+      const distance = Number(document.querySelector('#distance').value);
+      const lie = document.querySelector('input[name="lie"]:checked').value;
+      document.querySelector('#club-result').textContent = recommendClub(distance, lie, driver);
+      document.querySelector('#shot-context').textContent = `${distance} yards · ${lie}`;
+      result.hidden = false;
+      result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    });
+  </script>
 </body>
 </html>
+

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14261c">
+  <title>{{ club }} | vCaddie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="result-page">
+  <main class="result-shell">
+    <a class="home-link" href="https://keenroudy.com/">KR <span>Home</span></a>
+    <section class="result-card" aria-labelledby="result-title">
+      <p class="eyebrow">Your starting club</p>
+      <p class="shot-context">{{ distance }} yards · {{ lie }}</p>
+      <h1 id="result-title">{{ club }}</h1>
+      <p class="result-copy">Start there, take a look at the lie, and trust the swing you brought today.</p>
+      <a class="recommend-button" href="/">Check another shot <span aria-hidden="true">→</span></a>
+    </section>
+  </main>
+</body>
+</html>
+
